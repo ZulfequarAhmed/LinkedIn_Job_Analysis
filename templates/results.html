@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Scraped Job Data</h1>
+    
+    <div>
+        <h2>Job Roles Distribution</h2>
+        <img src="data:image/png;base64,{{ role_plot_url }}" alt="Job Roles Distribution">
+    </div>
+    
+    <div>
+        <h2>Jobs by Location</h2>
+        <img src="data:image/png;base64,{{ location_plot_url }}" alt="Jobs by Location">
+    </div>
+    
+    <div>
+        <h2>Scraped Job Table</h2>
+        {{ tables[0]|safe }}
+    </div>
+
+    <footer>
+        <p>LinkedIn Job Scraper | Developed with Flask</p>
+    </footer>
+</body>
+</html>
