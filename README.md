@@ -46,11 +46,20 @@ This project is a **Flask-based web application** that allows users to scrape jo
 
 
 LinkedIn_Job_Analysis/
+
 ├── app.py             # Main Flask app
+
 ├── templates/         # HTML templates
+
 │   ├── login.html     # Login page
+
 │   ├── results.html   # Results page
+
 ├── static/            # Static files (CSS, JS, images)
+
 │   └── style.css      # Custom styles
+
 ├── chromedriver       # ChromeDriver for Selenium
+
 └── README.md          # Project documentation
+
