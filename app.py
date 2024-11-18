@@ -97,33 +97,43 @@ def results():
     if scraped_data is None:
         return redirect(url_for('login'))
 
-    # Generate Role Distribution Plot
-    role_counts = scraped_data['Role'].value_counts()
-    plt.figure(figsize=(8, 5))
-    role_counts.plot(kind='bar', color='skyblue')
-    plt.title('Job Roles Distribution')
-    plt.xlabel('Job Role')
-    plt.ylabel('Number of Jobs')
-    plt.tight_layout()
+    # Check if DataFrame is empty
+    if scraped_data.empty:
+        return render_template('results.html', message="No job data found. Please try again.")
 
-    img = io.BytesIO()
-    plt.savefig(img, format='png')
-    img.seek(0)
-    role_plot_url = base64.b64encode(img.getvalue()).decode('utf8')
+    # Generate Role Distribution Plot
+    if 'Role' in scraped_data.columns:
+        role_counts = scraped_data['Role'].value_counts()
+        plt.figure(figsize=(8, 5))
+        role_counts.plot(kind='bar', color='skyblue')
+        plt.title('Job Roles Distribution')
+        plt.xlabel('Job Role')
+        plt.ylabel('Number of Jobs')
+        plt.tight_layout()
+
+        img = io.BytesIO()
+        plt.savefig(img, format='png')
+        img.seek(0)
+        role_plot_url = base64.b64encode(img.getvalue()).decode('utf8')
+    else:
+        role_plot_url = None
 
     # Generate Location Distribution Plot
-    location_counts = scraped_data['Location'].value_counts()
-    plt.figure(figsize=(8, 5))
-    location_counts.plot(kind='bar', color='lightgreen')
-    plt.title('Jobs by Location')
-    plt.xlabel('Location')
-    plt.ylabel('Number of Jobs')
-    plt.tight_layout()
+    if 'Location' in scraped_data.columns:
+        location_counts = scraped_data['Location'].value_counts()
+        plt.figure(figsize=(8, 5))
+        location_counts.plot(kind='bar', color='lightgreen')
+        plt.title('Jobs by Location')
+        plt.xlabel('Location')
+        plt.ylabel('Number of Jobs')
+        plt.tight_layout()
 
-    img = io.BytesIO()
-    plt.savefig(img, format='png')
-    img.seek(0)
-    location_plot_url = base64.b64encode(img.getvalue()).decode('utf8')
+        img = io.BytesIO()
+        plt.savefig(img, format='png')
+        img.seek(0)
+        location_plot_url = base64.b64encode(img.getvalue()).decode('utf8')
+    else:
+        location_plot_url = None
 
     return render_template(
         'results.html',
